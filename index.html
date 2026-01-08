@@ -24,6 +24,7 @@
         .container {
             text-align: center;
             padding: 20px;
+            position: relative;
         }
 
         .hint {
@@ -33,7 +34,38 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        .cheers-image {
+        .bonus-hint {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 215, 0, 0.2);
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: #ffd700;
+            font-size: 1rem;
+            text-align: right;
+            border: 2px solid #ffd700;
+        }
+
+        .multiplier-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .multiplier-badge.show {
+            display: inline-block;
+        }
+
+        .multiplier-value {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .game-image {
             cursor: pointer;
             max-width: 300px;
             border-radius: 15px;
@@ -41,11 +73,11 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        .cheers-image:hover {
+        .game-image:hover {
             transform: scale(1.05);
         }
 
-        .cheers-image:active {
+        .game-image:active {
             transform: scale(0.95);
         }
 
@@ -63,7 +95,6 @@
             margin-top: 10px;
         }
 
-        /* 閃現圖片 */
         .flash-image {
             position: fixed;
             top: 50%;
@@ -88,7 +119,6 @@
             100% { opacity: 0; }
         }
 
-        /* 彈窗樣式 */
         .modal {
             display: none;
             position: fixed;
@@ -120,6 +150,12 @@
             margin-bottom: 30px;
         }
 
+        .modal-content img {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
         .modal-buttons {
             display: flex;
             gap: 20px;
@@ -149,15 +185,6 @@
             color: white;
         }
 
-        /* 遊戲結束畫面 */
-        .game-over {
-            display: none;
-        }
-
-        .game-over.show {
-            display: block;
-        }
-
         .game-over h1 {
             color: #e74c3c;
             font-size: 2.5rem;
@@ -171,7 +198,37 @@
             margin-bottom: 30px;
         }
 
-        .restart-btn {
+        .thanks-screen h1 {
+            color: #2ecc71;
+            font-size: 2rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .thanks-screen p {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .prize-screen h1 {
+            color: #ff69b4;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .prize-screen p {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+        }
+
+        .prize-screen .game-image {
+            max-width: 400px;
+        }
+
+        .action-btn {
             padding: 15px 40px;
             font-size: 1.3rem;
             background: #ffd700;
@@ -181,43 +238,207 @@
             cursor: pointer;
             font-weight: bold;
             transition: transform 0.2s;
+            margin: 10px;
         }
 
-        .restart-btn:hover {
+        .action-btn:hover {
             transform: scale(1.1);
         }
 
-        .hidden {
-            display: none !important;
+        .action-btn.patrol {
+            background: #3498db;
+            color: white;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.show {
+            display: block;
+        }
+
+        .history-panel {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            background: rgba(255, 215, 0, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            max-width: 250px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .history-panel h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .history-count {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .history-items {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .history-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .history-item-text {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .prize-notification {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%) translateX(400px);
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.6);
+            border: 3px solid #fff;
+            max-width: 300px;
+            opacity: 0;
+            transition: all 0.5s ease;
+            z-index: 150;
+        }
+
+        .prize-notification.show {
+            transform: translateY(-50%) translateX(0);
+            opacity: 1;
+        }
+
+        .prize-notification img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 3px solid #fff;
+        }
+
+        .notification-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
-    <!-- 遊戲畫面 -->
-    <div class="container" id="gameScreen">
+    <!-- 右上角提示 -->
+    <div class="bonus-hint" id="bonusHint">
+        🎁 乾到300次送免費阿淇！
+        <div class="multiplier-badge" id="multiplierBadge">x<span class="multiplier-value" id="multiplierValue">3</span> 倍計數中！</div>
+    </div>
+
+    <!-- 右側獎勵通知 -->
+    <div class="prize-notification" id="prizeNotification">
+        <img src="" alt="獎品" id="notificationImg">
+        <div class="notification-text" id="notificationText"></div>
+    </div>
+
+    <!-- 左側歷史記錄 -->
+    <div class="history-panel" id="historyPanel">
+        <h3>🏆 已獲得阿淇</h3>
+        <div class="history-count">共 <span id="historyCount">0</span> 個</div>
+        <div class="history-items" id="historyItems"></div>
+    </div>
+
+    <!-- 乾杯畫面 -->
+    <div class="container screen show" id="cheersScreen">
         <p class="hint">👆 點擊圖片以乾杯 🍻</p>
-        <img src="1.png.png" alt="乾杯" class="cheers-image" id="cheersImg">
+        <img src="1.png.png" alt="乾杯" class="game-image" id="cheersImg">
         <div class="counter">
             乾杯次數
-            <span class="count-number" id="count">0</span>
+            <span class="count-number" id="cheersCount">0</span>
         </div>
     </div>
 
     <!-- 遊戲結束畫面 -->
-    <div class="container game-over" id="gameOverScreen">
-        <img src="7.png.jpg" alt="黃警官" class="cheers-image" style="cursor: default;">
+    <div class="container screen game-over" id="gameOverScreen">
+        <img src="7.png.jpg" alt="黃警官" class="game-image" style="cursor: default;">
         <h1>🚔 遊戲結束 🚔</h1>
         <p>你已被黃警官逮捕！</p>
-        <button class="restart-btn" id="restartBtn">重來一次</button>
+        <button class="action-btn" id="restartBtn">重來一次</button>
+        <button class="action-btn patrol" id="patrolBtn">跟黃警官去巡邏</button>
     </div>
 
-    <!-- 彈窗 -->
-    <div class="modal" id="modal">
+    <!-- 巡邏畫面 -->
+    <div class="container screen" id="patrolScreen">
+        <p class="hint">👮 點擊以巡邏 🚔</p>
+        <img src="7.png.jpg" alt="巡邏" class="game-image" id="patrolImg">
+        <div class="counter">
+            巡邏次數
+            <span class="count-number" id="patrolCount">0</span>
+        </div>
+    </div>
+
+    <!-- 感謝畫面 -->
+    <div class="container screen thanks-screen" id="thanksScreen">
+        <img src="7.png.jpg" alt="黃警官" class="game-image" style="cursor: default;">
+        <h1>🎉 謝謝你幫黃警官逮捕犯人！</h1>
+        <p>你可以回去乾杯了 🍻</p>
+        <p style="color: #ffd700;" id="multiplierMsg">✨ 你的乾杯次數會變三倍！✨</p>
+        <button class="action-btn" id="backToCheersBtn">回去乾杯</button>
+    </div>
+
+    <!-- 獎品畫面 -->
+    <div class="container screen prize-screen" id="prizeScreen">
+        <img src="" alt="獎品" class="game-image" id="prizeImg" style="cursor: default;">
+        <h1>🎊 恭喜！🎊</h1>
+        <p id="prizeText"></p>
+        <button class="action-btn" id="prizeRestartBtn">再玩一次</button>
+    </div>
+
+    <!-- 乾杯彈窗 -->
+    <div class="modal" id="cheersModal">
         <div class="modal-content">
             <h2>🍺 要不要大力撞他？ 🍺</h2>
             <div class="modal-buttons">
-                <button class="modal-btn btn-yes" id="btnYes">要</button>
-                <button class="modal-btn btn-no" id="btnNo">不要</button>
+                <button class="modal-btn btn-yes" id="cheersYes">要</button>
+                <button class="modal-btn btn-no" id="cheersNo">不要</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 巡邏彈窗 -->
+    <div class="modal" id="patrolModal">
+        <div class="modal-content">
+            <img src="4.png.jpg" alt="車手">
+            <h2>🚨 要不要逮捕這個車手？ 🚨</h2>
+            <div class="modal-buttons">
+                <button class="modal-btn btn-yes" id="patrolYes">要</button>
+                <button class="modal-btn btn-no" id="patrolNo">不要</button>
             </div>
         </div>
     </div>
@@ -227,74 +448,354 @@
 
     <audio id="cheersSound" src="1.mp3"></audio>
     <audio id="crashSound" src="2.mp3"></audio>
+    <audio id="patrolSound" src="3.mp3"></audio>
 
     <script>
-        const img = document.getElementById('cheersImg');
-        const sound = document.getElementById('cheersSound');
-        const crashSound = document.getElementById('crashSound');
-        const countDisplay = document.getElementById('count');
-        const modal = document.getElementById('modal');
-        const btnYes = document.getElementById('btnYes');
-        const btnNo = document.getElementById('btnNo');
-        const gameScreen = document.getElementById('gameScreen');
+        const cheersScreen = document.getElementById('cheersScreen');
         const gameOverScreen = document.getElementById('gameOverScreen');
-        const restartBtn = document.getElementById('restartBtn');
+        const patrolScreen = document.getElementById('patrolScreen');
+        const thanksScreen = document.getElementById('thanksScreen');
+        const prizeScreen = document.getElementById('prizeScreen');
+        const cheersImg = document.getElementById('cheersImg');
+        const patrolImg = document.getElementById('patrolImg');
+        const prizeImg = document.getElementById('prizeImg');
+        const prizeText = document.getElementById('prizeText');
+        const cheersCountDisplay = document.getElementById('cheersCount');
+        const patrolCountDisplay = document.getElementById('patrolCount');
+        const cheersModal = document.getElementById('cheersModal');
+        const patrolModal = document.getElementById('patrolModal');
         const flashImg = document.getElementById('flashImg');
+        const bonusHint = document.getElementById('bonusHint');
+        const multiplierBadge = document.getElementById('multiplierBadge');
+        const multiplierValue = document.getElementById('multiplierValue');
+        const multiplierMsg = document.getElementById('multiplierMsg');
+        const historyPanel = document.getElementById('historyPanel');
+        const historyCount = document.getElementById('historyCount');
+        const historyItems = document.getElementById('historyItems');
+        const prizeNotification = document.getElementById('prizeNotification');
+        const notificationImg = document.getElementById('notificationImg');
+        const notificationText = document.getElementById('notificationText');
 
-        let count = 0;
-        let nextTrigger = getRandomTrigger();
+        const cheersSound = document.getElementById('cheersSound');
+        const crashSound = document.getElementById('crashSound');
+        const patrolSound = document.getElementById('patrolSound');
+
+        const restartBtn = document.getElementById('restartBtn');
+        const patrolBtn = document.getElementById('patrolBtn');
+        const backToCheersBtn = document.getElementById('backToCheersBtn');
+        const prizeRestartBtn = document.getElementById('prizeRestartBtn');
+        const cheersYes = document.getElementById('cheersYes');
+        const cheersNo = document.getElementById('cheersNo');
+        const patrolYes = document.getElementById('patrolYes');
+        const patrolNo = document.getElementById('patrolNo');
+
+        const prizes = [
+            { id: 'baseball', img: '2.png.jpg', text: '你獲得棒球阿淇！⚾', rarity: 'N', weight: 49.5 },
+            { id: 'cat', img: '5.png.jpg', text: '你獲得可愛喵喵阿淇！🐱', rarity: 'SSR', weight: 1 },
+            { id: 'girl', img: '6.png.jpg', text: '你獲得長髮辣妹阿淇！💃', rarity: 'N', weight: 49.5 }
+        ];
+
+        let prizeHistory = prizes.map(prize => ({ ...prize, count: 0 }));
 
         function getRandomTrigger() {
-            return Math.floor(Math.random() * 16) + 5; // 5 到 20 之間
+            const baseMin = 5;
+            const baseMax = 20;
+            const multiplierBonus = (multiplier - 1) * 10;
+            const min = baseMin + multiplierBonus;
+            const max = baseMax + multiplierBonus;
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        img.addEventListener('click', () => {
-            // 播放音效
-            sound.currentTime = 0;
-            sound.play();
-            
-            // 增加計數
-            count++;
-            countDisplay.textContent = count;
+        function getRandomPatrolTrigger() {
+            return Math.floor(Math.random() * 5) + 1;
+        }
 
-            // 達到隨機次數時彈窗
-            if (count === nextTrigger) {
-                modal.classList.add('show');
+        let cheersCount = 0;
+        let clickCount = 0;
+        let patrolCount = 0;
+        let multiplier = 1; // 初始1倍（没有喵喵）
+        let cheersMult = 1; // 乾杯倍數初始1倍
+        let patrolMult = 1; // 巡邏倍數初始1倍
+        let cheersTrigger = getRandomTrigger();
+        let patrolTrigger = getRandomPatrolTrigger();
+
+        function getRandomPrize() {
+            const totalWeight = prizes.reduce((sum, prize) => sum + prize.weight, 0);
+            let random = Math.random() * totalWeight;
+            
+            for (let prize of prizes) {
+                random -= prize.weight;
+                if (random <= 0) {
+                    return prize;
+                }
+            }
+            return prizes[0];
+        }
+
+        function addToHistory(prize) {
+            const existing = prizeHistory.find(p => p.id === prize.id);
+            if (existing) {
+                existing.count++;
+            } else {
+                prizeHistory.push({ ...prize, count: 1 });
+            }
+            updateHistoryDisplay();
+            
+            // 檢查是否需要送紑焙
+            checkAndRewardCat();
+            updateMultiplierByCat();
+        }
+
+        function checkAndRewardCat() {
+            const totalCount = prizeHistory.reduce((sum, p) => sum + p.count, 0);
+            // 每100個阿淇送一個紑焙
+            const catRewards = Math.floor(totalCount / 100);
+            const catItem = prizeHistory.find(p => p.id === 'cat');
+            
+            if (catItem && catItem.count < catRewards) {
+                catItem.count = catRewards;
+                updateHistoryDisplay();
+            }
+        }
+
+        function updateMultiplierByCat() {
+            const catItem = prizeHistory.find(p => p.id === 'cat');
+            const catCount = catItem ? catItem.count : 0;
+            
+            // 每個喵喵+5倍：0個->1倍 1個->6倍 2個->11倍 3個->16倍
+            cheersMult = 1 + (catCount * 5);
+            
+            // 總倍數 = 乾杯倍數 * 巡邏倍數
+            multiplier = cheersMult * patrolMult;
+            updateMultiplierBadge();
+        }
+
+        function updateHistoryDisplay() {
+            const totalCount = prizeHistory.reduce((sum, p) => sum + p.count, 0);
+            historyCount.textContent = totalCount;
+            historyItems.innerHTML = '';
+            prizeHistory.forEach((prize) => {
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                const rarityTag = prize.rarity === 'SSR' ? ' <span style="color: #ff69b4; font-weight: bold;">(SSR)</span>' : '';
+                item.innerHTML = `
+                    <img src="${prize.img}" alt="阿淇">
+                    <div class="history-item-text">
+                        ${prize.text.replace('你獲得', '').replace(/[！!]/g, '')}${rarityTag}
+                        <br><strong>x ${prize.count}</strong>
+                    </div>
+                `;
+                historyItems.appendChild(item);
+            });
+        }
+
+        function showScreen(screen) {
+            cheersScreen.classList.remove('show');
+            gameOverScreen.classList.remove('show');
+            patrolScreen.classList.remove('show');
+            thanksScreen.classList.remove('show');
+            prizeScreen.classList.remove('show');
+            screen.classList.add('show');
+
+            // 只在乾杯畫面顯示右上角提示
+            bonusHint.style.display = (screen === cheersScreen) ? 'block' : 'none';
+            // 左側欄始終顯示
+            historyPanel.style.display = 'block';
+        }
+
+        function flashImage() {
+            flashImg.classList.remove('show');
+            void flashImg.offsetWidth;
+            flashImg.classList.add('show');
+        }
+
+        function updateMultiplierBadge() {
+            if (multiplier > 1) {
+                multiplierBadge.classList.add('show');
+                multiplierValue.textContent = multiplier;
+            } else {
+                multiplierBadge.classList.remove('show');
+            }
+        }
+
+        function showPrize() {
+            const prize = getRandomPrize();
+            addToHistory(prize);
+            
+            // 顯示右側通知
+            notificationImg.src = prize.img;
+            notificationText.textContent = prize.text;
+            prizeNotification.classList.add('show');
+            
+            // 3秒後隱藏通知
+            setTimeout(() => {
+                prizeNotification.classList.remove('show');
+            }, 3000);
+            
+            // 不要重置cheersCount，繼續累計
+        }
+
+        function resetGame() {
+            cheersCount = 0;
+            clickCount = 0;
+            lastPrizeCount = 0; // 重置獎品門檻
+            cheersCountDisplay.textContent = 0;
+            cheersTrigger = getRandomTrigger();
+            patrolMult = 1; // 重置巡邏倍數
+            // 根據喵喵數量重新計算倍數
+            updateMultiplierByCat();
+        }
+
+        let lastPrizeCount = 0; // 上次獲得獎品時的乾杯次數門檻
+
+        cheersImg.addEventListener('click', () => {
+            cheersSound.currentTime = 0;
+            cheersSound.play();
+            clickCount++;
+            cheersCount += multiplier;
+            cheersCountDisplay.textContent = cheersCount;
+
+            // 每300次送一個隨機阿淇（棒球49.5%、辣妹49.5%、喵喵1%）
+            const prizeThreshold = Math.floor(cheersCount / 300);
+            if (prizeThreshold > lastPrizeCount) {
+                // 計算要給幾個阿淇
+                const prizesToGive = prizeThreshold - lastPrizeCount;
+                lastPrizeCount = prizeThreshold;
+                
+                // 批量處理阿淇
+                let baseballCount = 0;
+                let catCount = 0;
+                let girlCount = 0;
+                
+                for (let i = 0; i < prizesToGive; i++) {
+                    const rand = Math.random() * 100;
+                    if (rand < 1) {
+                        catCount++; // 1%機率抽到喵喵
+                    } else if (rand < 50.5) {
+                        baseballCount++;
+                    } else {
+                        girlCount++;
+                    }
+                }
+                
+                // 一次性更新歷史記錄
+                const baseballItem = prizeHistory.find(p => p.id === 'baseball');
+                const catItem = prizeHistory.find(p => p.id === 'cat');
+                const girlItem = prizeHistory.find(p => p.id === 'girl');
+                
+                if (baseballItem) baseballItem.count += baseballCount;
+                if (catItem) catItem.count += catCount;
+                if (girlItem) girlItem.count += girlCount;
+                
+                // 檢查是否達到300個阿淇（棒球+辣妹）送額外喵喵
+                const totalNormalPrizes = (baseballItem ? baseballItem.count : 0) + (girlItem ? girlItem.count : 0);
+                const expectedBonusCats = Math.floor(totalNormalPrizes / 300);
+                const currentCats = catItem ? catItem.count : 0;
+                // 計算應該有的喵喵數（抽到的 + 獎勵的）
+                // 用一個變數記錄已經給過的獎勵喵喵
+                if (!window.bonusCatsGiven) window.bonusCatsGiven = 0;
+                const bonusCatsToAdd = expectedBonusCats - window.bonusCatsGiven;
+                
+                if (bonusCatsToAdd > 0 && catItem) {
+                    catItem.count += bonusCatsToAdd;
+                    window.bonusCatsGiven = expectedBonusCats;
+                    catCount += bonusCatsToAdd; // 加到通知顯示
+                }
+                
+                updateHistoryDisplay();
+                updateMultiplierByCat();
+                
+                // 顯示右側通知
+                if (prizesToGive > 0) {
+                    let notifyText = `一次獲得 ${prizesToGive} 個阿淇！`;
+                    if (catCount > 0) {
+                        notifyText = `🎉 獲得 ${catCount} 個喵喵！共 ${prizesToGive} 個阿淇`;
+                        notificationImg.src = '5.png.jpg';
+                    } else {
+                        notificationImg.src = Math.random() < 0.5 ? '2.png.jpg' : '6.png.jpg';
+                    }
+                    notificationText.textContent = notifyText;
+                    prizeNotification.classList.add('show');
+                    
+                    setTimeout(() => {
+                        prizeNotification.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            if (clickCount >= cheersTrigger) {
+                cheersModal.classList.add('show');
             }
         });
 
-        // 按「要」
-        btnYes.addEventListener('click', () => {
-            modal.classList.remove('show');
+        cheersYes.addEventListener('click', () => {
+            cheersModal.classList.remove('show');
             crashSound.currentTime = 0;
             crashSound.play();
-            
-            // 顯示遊戲結束畫面
-            gameScreen.classList.add('hidden');
-            gameOverScreen.classList.add('show');
+            showScreen(gameOverScreen);
         });
 
-        // 按「不要」
-        btnNo.addEventListener('click', () => {
-            modal.classList.remove('show');
-            
-            // 閃現 3.png 然後慢慢消失
-            flashImg.classList.remove('show');
-            void flashImg.offsetWidth; // 強制重繪
-            flashImg.classList.add('show');
-            
-            // 設定下一次觸發的隨機次數
-            nextTrigger = count + getRandomTrigger();
+        cheersNo.addEventListener('click', () => {
+            cheersModal.classList.remove('show');
+            flashImage();
+            cheersTrigger = clickCount + getRandomTrigger();
         });
 
-        // 重來一次
         restartBtn.addEventListener('click', () => {
-            count = 0;
-            countDisplay.textContent = 0;
-            nextTrigger = getRandomTrigger();
-            gameOverScreen.classList.remove('show');
-            gameScreen.classList.remove('hidden');
+            resetGame();
+            showScreen(cheersScreen);
         });
+
+        patrolBtn.addEventListener('click', () => {
+            patrolCount = 0;
+            patrolCountDisplay.textContent = 0;
+            patrolTrigger = getRandomPatrolTrigger();
+            showScreen(patrolScreen);
+        });
+
+        patrolImg.addEventListener('click', () => {
+            cheersSound.currentTime = 0;
+            cheersSound.play();
+            patrolCount++;
+            patrolCountDisplay.textContent = patrolCount;
+
+            if (patrolCount === patrolTrigger) {
+                patrolSound.currentTime = 0;
+                patrolSound.play();
+                patrolModal.classList.add('show');
+            }
+        });
+
+        patrolYes.addEventListener('click', () => {
+            patrolModal.classList.remove('show');
+            // 巡邏倍數疑加3倍
+            patrolMult *= 3;
+            // 重新計算總倍數
+            multiplier = cheersMult * patrolMult;
+            // 更新感謝畫面的訊息
+            multiplierMsg.textContent = `✨ 你的乾杯倍數現在是 ${multiplier} 倍！✨`;
+            showScreen(thanksScreen);
+        });
+
+        patrolNo.addEventListener('click', () => {
+            patrolModal.classList.remove('show');
+            patrolTrigger = patrolCount + getRandomPatrolTrigger();
+        });
+
+        backToCheersBtn.addEventListener('click', () => {
+            cheersTrigger = clickCount + getRandomTrigger();
+            updateMultiplierByCat();
+            showScreen(cheersScreen);
+        });
+
+        prizeRestartBtn.addEventListener('click', () => {
+            resetGame();
+            showScreen(cheersScreen);
+        });
+
+        // 初始化歷史顯示
+        updateHistoryDisplay();
+        historyPanel.style.display = 'block';
     </script>
 </body>
 </html>
